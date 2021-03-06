@@ -1,10 +1,10 @@
-# Code>bin
+# Copy>bin
 
-Code>bin is an educational website for computer science students
+Copy>bin is a link generation website
 
 ## Website
 
-https://codebin4u.web.app
+https://copybin4u.web.app
 
 
 
