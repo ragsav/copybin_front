@@ -80,7 +80,7 @@ export default function Products(props) {
                     }}
                   >
                     <a
-                      href={Constants.HOST + co.key}
+                      href={co.key}
                       // target="_blank"
                       // className="textStyleCode"
                       style={{

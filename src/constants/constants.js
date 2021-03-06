@@ -57,7 +57,11 @@ module.exports = Object.freeze({
   PRODUCTS: [
     {
       name: "Encrypt/Decrypt file",
-      key: "encrypt_decrypt",
+      key: HOST + "encrypt_decrypt",
+    },
+    {
+      name: "Code>bin (Website for computer science students)",
+      key: "https://codebin4u.web.app/",
     },
   ],
 });
