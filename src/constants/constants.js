@@ -57,7 +57,7 @@ module.exports = Object.freeze({
   PRODUCTS: [
     {
       name: "Encrypt/Decrypt file",
-      key: HOST + "encrypt_decrypt",
+      key: "https://copybin4u.web.app/encrypt_decrypt",
     },
     {
       name: "Code>bin (Website for computer science students)",
