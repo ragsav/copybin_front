@@ -23,7 +23,7 @@ import {
 const axios = require("axios");
 function toDate(date) {
   var d = new Date(date);
-  return d.toTimeString();
+  return d.toTimeString() + " (" + d.toLocaleDateString() + ")";
 }
 function PostsList(props) {
   const posts = props.posts[0].message;

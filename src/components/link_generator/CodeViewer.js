@@ -16,12 +16,24 @@ Constants.MODES.forEach((lang) => {
 Constants.THEMES.forEach((theme) =>
   require(`ace-builds/src-noconflict/theme-${theme}`)
 );
+function toDate(date) {
+  var d = new Date(date);
+  return d.toTimeString()+ " (" + d.toLocaleDateString()+")";
+}
 
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
 export default class CodeViewer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       text: "",
+      title: "",
+      createdAt: "",
+      updatedAt: "",
       editedText: "",
       submitted: false,
       isPassword: false,
@@ -57,10 +69,14 @@ export default class CodeViewer extends React.Component {
             isPassword: true,
           });
         } else {
+          console.log(response.data.message);
           self.setState({
-            text: response.data.message,
-            editedText: response.data.message,
+            text: response.data.message.text,
+            editedText: response.data.message.text,
             editable: response.data.editable,
+            title:  response.data.message.title,
+            createdAt: response.data.message.createdAt,
+            updatedAt: response.data.message.updatedAt,
           });
         }
       })
@@ -113,9 +129,12 @@ export default class CodeViewer extends React.Component {
 
         if (response.data.success === true) {
           self.setState({
-            text: response.data.message,
-            editedText: response.data.message,
+            text: response.data.message.text,
+            editedText: response.data.message.text,
             editable: response.data.editable,
+            title: response.data.message.title,
+            createdAt: response.data.message.createdAt,
+            updatedAt: response.data.message.updatedAt,
           });
         } else {
           alert("Wrong password");
@@ -301,6 +320,47 @@ export default class CodeViewer extends React.Component {
                       <Form style={{ width: "100%" }}>
                         <div style={{ padding: 4 }}></div>
 
+                        {this.state.title === "" ? null : (
+                          <Row
+                            style={{
+                              padding: 4,
+                              textAlign: "left",
+                              fontSize: 12,
+                              fontWeight: "700",
+                            }}
+                          >
+                            <Col>{`Title : ${toTitleCase(
+                              this.state.title
+                            )}`}</Col>
+                          </Row>
+                        )}
+                        {this.state.createdAt === "" ? null : (
+                          <Row
+                            style={{
+                              padding: 4,
+                              textAlign: "left",
+                              fontSize: 12,
+                              fontWeight: "500",
+                            }}
+                          >
+                            <Col>{`Created on : ${toDate(
+                              this.state.createdAt
+                            )}`}</Col>
+                          </Row>
+                        )}
+                        {this.state.updatedAt === "" ? null : 
+                        <Row
+                          style={{
+                            padding: 4,
+                            textAlign: "left",
+                            fontSize: 12,
+                            fontWeight: "500",
+                          }}
+                        >
+                          <Col>{`Updated on : ${toDate(
+                            this.state.updatedAt
+                          )}`}</Col>
+                        </Row>}
                         <Row style={{ padding: 4 }}>
                           <Col id="password">
                             {this.state.isPassword ? (
