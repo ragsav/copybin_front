@@ -346,14 +346,13 @@ export default class CodeViewer extends React.Component {
                     >
                       <Form style={{ width: "100%" }}>
                         <Card style={{ padding: 0, margin: 4 }}>
-                          <Row style={{ padding: 0 ,margin:0}}>
-                            <Col style={{ padding: 0 ,margin:0}}>
+                          <Row style={{ padding: 0, margin: 0 }}>
+                            <Col style={{ padding: 0, margin: 0 }}>
                               <Button
                                 variant="link"
                                 style={{
                                   fontSize: 12,
-                                  
-                                  
+
                                   textDecoration: "none",
                                 }}
                                 onClick={this.textFile}
@@ -361,13 +360,12 @@ export default class CodeViewer extends React.Component {
                                 Download
                               </Button>
                             </Col>
-                            <Col style={{ padding: 0,margin:0 }}>
+                            <Col style={{ padding: 0, margin: 0 }}>
                               <Button
                                 variant="link"
                                 style={{
                                   fontSize: 12,
-                                  
-                                  
+
                                   textDecoration: "none",
                                 }}
                                 onClick={this.textFile}
@@ -473,7 +471,7 @@ export default class CodeViewer extends React.Component {
                                   <Col sm={10} className="textStyleCode">
                                     {this.state.submitted
                                       ? "Getting text..."
-                                      : "Get text"}
+                                      : "Get>text"}
                                   </Col>
                                   <Col sm={2}>
                                     <Grid
@@ -555,13 +553,13 @@ export default class CodeViewer extends React.Component {
 
           <Row
             style={{
-              padding: 0,
+              padding: 4,
               margin: 0,
             }}
           >
             <Col
               style={{
-                padding: 0,
+                padding: 4,
                 margin: 0,
               }}
             >

@@ -64,4 +64,18 @@ module.exports = Object.freeze({
       key: "https://copybin4u.web.app/encrypt_decrypt",
     },
   ],
+  SOCIAL: [
+    {
+      url: "https://github.com/andrewgbliss",
+      className: "fa-github-square",
+    },
+    {
+      url: "https://gitlab.com/andrewgbliss",
+      className: "fa-gitlab",
+    },
+    {
+      url: "https://www.npmjs.com/~andrewgbliss",
+      className: "fa-npm",
+    },
+  ],
 });

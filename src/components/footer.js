@@ -7,7 +7,9 @@ import {
     Col,
     Container,
 } from "react-bootstrap";
+
 import Constants from "../constants/constants";
+var { SocialIcon } = require("react-social-icons");
 export default function Footer(props) {
     return (
       <div
@@ -63,6 +65,33 @@ export default function Footer(props) {
                 Copy>bin is a link generation website
               </Col>
             </Row>
+            <Row style={{ padding: 4, margin: 0,  paddingLeft:  15 }}>
+              <div
+                style={{
+                  padding: 4,
+                  textAlign: "left",
+                }}
+              >
+                <SocialIcon
+                  bgColor="#fff"
+                  fgColor="#000"
+                  url="https://github.com/ragsav/copybin_frontend"
+                  style={{ height: 30, width: 30 }}
+                />
+              </div>
+              <div
+                style={{
+                  padding: 4,
+                  textAlign: "left",
+                }}
+              >
+                <SocialIcon
+                  fgColor="#fff"
+                  url="https://reddit.com/user/bappujji"
+                  style={{ height: 30, width: 30 }}
+                />
+              </div>
+            </Row>
           </Col>
 
           <Col
@@ -83,9 +112,9 @@ export default function Footer(props) {
             <Row style={{ padding: 4, margin: 0 }}>
               <ul
                 style={{
-                //   textDecoration: "none",
+                  //   textDecoration: "none",
                   textAlign: "left",
-                //   color: "white",
+                  //   color: "white",
                   fontSize: 12,
                   fontWeight: 100,
                 }}
@@ -98,9 +127,8 @@ export default function Footer(props) {
                       // className="textStyleCode"
                       style={{
                         textDecoration: "none",
-                        
+
                         color: "white",
-                        
                       }}
                     >
                       {" "}
@@ -157,3 +185,5 @@ export default function Footer(props) {
       </div>
     );
 }
+// import GithubCorner from "react-github-corner";
+{/* <GithubCorner href="https://github.com/username/repo" direction="left" />; */}
