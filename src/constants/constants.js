@@ -60,7 +60,7 @@ module.exports = Object.freeze({
       key: "https://copybin4u.web.app/encrypt_decrypt",
     },
     {
-      name: "Code>bin (Website for computer science students)",
+      name: "Code>bin",
       key: "https://codebin4u.web.app/",
     },
   ],

@@ -26,6 +26,8 @@ function toTitleCase(str) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 }
+
+
 export default class CodeViewer extends React.Component {
   constructor(props) {
     super(props);
@@ -45,7 +47,7 @@ export default class CodeViewer extends React.Component {
     };
 
     this.onTextChanged = this.onTextChanged.bind(this);
-
+    this.textFile = this.textFile.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     // this.getInitData = this.getInitData.bind(this)
     this.setTextEditorMode = this.setTextEditorMode.bind(this);
@@ -149,6 +151,7 @@ export default class CodeViewer extends React.Component {
     });
     event.preventDefault();
   };
+
   onPasswordChanged = (event) => {
     console.log(this.state.password);
     this.setState({ password: event.target.value });
@@ -203,9 +206,21 @@ export default class CodeViewer extends React.Component {
     event.preventDefault();
     // }
   };
+
   hasError(key) {
     return this.state.errors.indexOf(key) !== -1;
   }
+
+  textFile=()=>{
+    const element = document.createElement("a");
+    const file = new Blob([this.state.text], {
+      type: "text/plain;charset=utf-8",
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = `${this.state.title}.txt`;
+    document.body.appendChild(element);
+    element.click();
+};
   render() {
     return (
       <div>
@@ -348,19 +363,20 @@ export default class CodeViewer extends React.Component {
                             )}`}</Col>
                           </Row>
                         )}
-                        {this.state.updatedAt === "" ? null : 
-                        <Row
-                          style={{
-                            padding: 4,
-                            textAlign: "left",
-                            fontSize: 12,
-                            fontWeight: "500",
-                          }}
-                        >
-                          <Col>{`Updated on : ${toDate(
-                            this.state.updatedAt
-                          )}`}</Col>
-                        </Row>}
+                        {this.state.updatedAt === "" ? null : (
+                          <Row
+                            style={{
+                              padding: 4,
+                              textAlign: "left",
+                              fontSize: 12,
+                              fontWeight: "500",
+                            }}
+                          >
+                            <Col>{`Updated on : ${toDate(
+                              this.state.updatedAt
+                            )}`}</Col>
+                          </Row>
+                        )}
                         <Row style={{ padding: 4 }}>
                           <Col id="password">
                             {this.state.isPassword ? (
@@ -486,25 +502,13 @@ export default class CodeViewer extends React.Component {
                             </Form.Control>
                           </Col>
                         </Row>
-                        {/* <Row style={{ padding: 4 }}>
+                        <Row style={{ padding: 4 }}>
                           <Col>
-                            <Form.Control
-                              as="select"
-                              style={{
-                                fontSize: "small",
-                                border: "1px solid rgb(153, 153, 153)",
-                                color: "rgb(153, 153, 153)",
-                              }}
-                              onChange={this.setTextEditorTheme}
-                            >
-                              {Constants.THEMES.map((lang) => (
-                                <option key={lang} value={lang}>
-                                  {lang}
-                                </option>
-                              ))}
-                            </Form.Control>
+                            <Button variant="link" style={{fontSize:12,float:"center"}} onClick={this.textFile}>Download as file</Button>
                           </Col>
-                        </Row> */}
+                         
+                        </Row>
+                        
                       </Form>
                     </Col>
                   </Row>

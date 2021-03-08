@@ -215,7 +215,7 @@ export default class EditorTab extends React.Component {
         data: postObject,
       })
         .then(function (response) {
-          console.log(response.data.url);
+          console.log(response.data);
           self.setState({
             link: response.data.url,
             submitted: false,
