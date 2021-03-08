@@ -336,7 +336,36 @@ export default class CodeViewer extends React.Component {
                       }}
                     >
                       <Form style={{ width: "100%" }}>
-                        <div style={{ padding: 4 }}></div>
+                        <Card style={{ padding: 0, margin: 4 }}>
+                          <Row style={{ padding: 0 }}>
+                            <Col style={{ padding: 2 }}>
+                              <Button
+                                variant="link"
+                                style={{
+                                  fontSize: 12,
+                                  padding: 0,
+                                  textDecoration: "none",
+                                }}
+                                onClick={this.textFile}
+                              >
+                                Download
+                              </Button>
+                            </Col>
+                            <Col style={{ padding: 4 }}>
+                              <Button
+                                variant="link"
+                                style={{
+                                  fontSize: 12,
+                                  padding: 0,
+                                  textDecoration: "none",
+                                }}
+                                onClick={this.textFile}
+                              >
+                                Raw
+                              </Button>
+                            </Col>
+                          </Row>
+                        </Card>
 
                         {this.state.title === "" ? null : (
                           <Row
@@ -505,13 +534,6 @@ export default class CodeViewer extends React.Component {
                             </Form.Control>
                           </Col>
                         </Row>
-                        <Row style={{ padding: 4 }}>
-                          <Col>
-                            <Button variant="link" style={{fontSize:12,float:"center"}} onClick={this.textFile}>Download as file</Button>
-                          </Col>
-                         
-                        </Row>
-                        
                       </Form>
                     </Col>
                   </Row>
