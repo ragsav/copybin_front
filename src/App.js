@@ -13,14 +13,7 @@ import EncryptDecrypt from "./components/encrypt decrypt/encrypt_decrypt";
 
 function App() {
   return (
-    <div
-      className="App"
-      style={{
-        overflow: "scroll",
-        backgroundColor: Constants.PRIMARY,
-        padding: 10,
-      }}
-    >
+    <div className="App">
       <Container style={{ padding: 0, height: "100%" }} fluid>
         <Row
           style={{ padding: 0, margin: 0, width: "100%", maxHeight: "100%" }}

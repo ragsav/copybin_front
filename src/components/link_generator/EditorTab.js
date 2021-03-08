@@ -670,21 +670,7 @@ export default class EditorTab extends React.Component {
               <PostTab></PostTab>
             </Col>
           </Row>
-          <Row
-            style={{
-              padding: 4,
-              margin: 0,
-            }}
-          >
-            <Col
-              style={{
-                padding: 4,
-                margin: 0,
-              }}
-            >
-              <Products></Products>
-            </Col>
-          </Row>
+
           <Row
             style={{
               padding: 4,

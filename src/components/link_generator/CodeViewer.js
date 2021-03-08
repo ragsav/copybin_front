@@ -271,7 +271,7 @@ export default class CodeViewer extends React.Component {
 
                         // border: "none",
                         borderRadius: 4,
-                        padding: "1%",
+                        padding: 4,
                         fontSize: "13px",
                         fontWeight: "500",
                         color: Constants.SECONDARY,
@@ -280,7 +280,7 @@ export default class CodeViewer extends React.Component {
                     >
                       <Row style={{ padding: 0, margin: 0 }}>
                         <Col
-                          style={{ padding: 0, margin: 0, textAlign: "start" }}
+                          style={{ padding: 4, margin: 0, textAlign: "start" }}
                         >
                           {Constants.PASTE}
                         </Col>

@@ -3,7 +3,14 @@ html, body, #root, .App {
 }
 
 .App {
+  overflow: scroll;
+  padding: 10px;
   text-align: center;
+  /* background-color: #000; */
+ background-image: radial-gradient(#ffffff9e 1px, transparent 4%);
+  background-color: #5c4e6e;
+  background-position: 0 0, 50px 50px;
+  background-size: 40px 40px;
 }
 html, body, #root, .App {
   height: 100%;
