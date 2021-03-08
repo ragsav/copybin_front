@@ -17,7 +17,6 @@ Constants.MODES.forEach((lang) => {
   require(`ace-builds/src-noconflict/mode-${lang}`);
   require(`ace-builds/src-noconflict/snippets/${lang}`);
 });
-
 Constants.THEMES.forEach((theme) =>
   require(`ace-builds/src-noconflict/theme-${theme}`)
 );
@@ -61,6 +60,7 @@ function decodeText(text, key, iv) {
 
   return decodedText;
 }
+
 function makeTextFile(text) {
   var data = new Blob([text], { type: "text/plain" });
 
@@ -78,6 +78,7 @@ function makeTextFile(text) {
 }
 
 export default class EncryptDecrypt extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -102,27 +103,32 @@ export default class EncryptDecrypt extends React.Component {
     this.setTextEditorTheme = this.setTextEditorTheme.bind(this);
     this.onFileDropped = this.onFileDropped.bind(this);
   }
+
   componentDidMount() {}
 
   componentWillUnmount() {}
 
   onTextChanged = (newText) => {
     this.setState({ text: newText });
-    // console.log(this.state.editedText);
+
   };
+
   onPasswordChanged = (event) => {
-    console.log(this.state.password);
     this.setState({ password: event.target.value });
   };
+
   onCheckBoxClicked = () => {
     this.setState({ isPassword: !this.state.isPassword });
   };
+
   onFileDropped = (file, text) => {
     this.setState({ file: text });
   };
+
   onProcessChanged = (event) => {
     this.setState({ process: event.target.value });
   };
+
   onTypeChanged = (event) => {
     this.setState({ type: event.target.value });
   };
@@ -132,6 +138,7 @@ export default class EncryptDecrypt extends React.Component {
       textEditortheme: e.target.value,
     });
   };
+
   setTextEditorMode = (e) => {
     this.setState({
       textEditorMode: e.target.value,
@@ -177,7 +184,7 @@ export default class EncryptDecrypt extends React.Component {
           text: decodedText,
         });
       }
-      console.log(this.state.text);
+     
     } else {
       alert("Password not valid");
     }

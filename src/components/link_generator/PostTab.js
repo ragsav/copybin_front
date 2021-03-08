@@ -28,9 +28,9 @@ function toDate(date) {
 function PostsList(props) {
   const posts = props.posts[0].message;
 
-  //   console.log(posts[0].message);
   const PostItems = posts.map((post) => (
     <Card
+    key={post.updatedAt}
       style={{
         padding: "0% 0% 0% 0%",
         border: "none",
@@ -157,7 +157,6 @@ export default class PostTab extends React.Component {
       url: Constants.SERVERHOST + "/api/public/getLatestPosts/",
     })
       .then(function (response) {
-        console.log(response.data);
         self.setPosts([]);
         var newData = self.state.posts.concat([response.data]);
 
@@ -165,7 +164,6 @@ export default class PostTab extends React.Component {
         self.setLoading(false);
       })
       .catch(function (error) {
-        console.log(error);
       });
   };
   setLoading = (loading) => {

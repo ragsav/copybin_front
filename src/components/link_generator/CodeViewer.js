@@ -16,6 +16,7 @@ Constants.MODES.forEach((lang) => {
 Constants.THEMES.forEach((theme) =>
   require(`ace-builds/src-noconflict/theme-${theme}`)
 );
+
 function toDate(date) {
   var d = new Date(date);
   return d.toTimeString()+ " (" + d.toLocaleDateString()+")";
@@ -29,6 +30,7 @@ function toTitleCase(str) {
 
 
 export default class CodeViewer extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -49,14 +51,14 @@ export default class CodeViewer extends React.Component {
     this.onTextChanged = this.onTextChanged.bind(this);
     this.textFile = this.textFile.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.getInitData = this.getInitData.bind(this)
+   
     this.setTextEditorMode = this.setTextEditorMode.bind(this);
     this.setTextEditorTheme = this.setTextEditorTheme.bind(this);
     this.onPasswordChanged = this.onPasswordChanged.bind(this);
   }
+
   componentDidMount() {
-    // window.addEventListener("load", this.handleLoad);
-    console.log("mounted");
+    
     var url_comp = window.location.href.split("/");
     var currentUrlToken = url_comp[url_comp.length - 1];
     var self = this;
@@ -71,7 +73,7 @@ export default class CodeViewer extends React.Component {
             isPassword: true,
           });
         } else {
-          console.log(response.data.message);
+          
           self.setState({
             text: response.data.message.text,
             editedText: response.data.message.text,
@@ -83,7 +85,7 @@ export default class CodeViewer extends React.Component {
         }
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error)
       });
     // this.getInitData();
   }
@@ -96,7 +98,8 @@ export default class CodeViewer extends React.Component {
     this.setState({
       textEditortheme: e.target.value,
     });
-  };
+  }
+
   setTextEditorMode = (e) => {
     this.setState({
       textEditorMode: e.target.value,
@@ -105,7 +108,7 @@ export default class CodeViewer extends React.Component {
 
   onTextChanged = (newText) => {
     this.setState({ editedText: newText });
-    console.log(this.state.editedText);
+    
   };
 
   handleGetText = (event) => {
@@ -127,7 +130,7 @@ export default class CodeViewer extends React.Component {
       data: postObject,
     })
       .then(function (response) {
-        console.log(response);
+        
 
         if (response.data.success === true) {
           self.setState({
@@ -153,7 +156,7 @@ export default class CodeViewer extends React.Component {
   };
 
   onPasswordChanged = (event) => {
-    console.log(this.state.password);
+    
     this.setState({ password: event.target.value });
   };
 
@@ -193,13 +196,12 @@ export default class CodeViewer extends React.Component {
           alert("Text not editable");
         }
 
-        console.log(response.data);
+        
       })
       .catch(function (error) {
         console.log(error);
       });
-    //   console.log("text submitted");
-    //   console.log(postObject);
+    
     self.setState({
       submitted: false,
     });
@@ -220,7 +222,8 @@ export default class CodeViewer extends React.Component {
     element.download = `${this.state.title}.txt`;
     document.body.appendChild(element);
     element.click();
-};
+  }
+
   render() {
     return (
       <div>
@@ -536,4 +539,5 @@ export default class CodeViewer extends React.Component {
       </div>
     );
   }
+
 }

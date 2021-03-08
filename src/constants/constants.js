@@ -56,12 +56,12 @@ module.exports = Object.freeze({
   MONOKAILIGHT: "#a3a3a3",
   PRODUCTS: [
     {
-      name: "Encrypt/Decrypt file",
-      key: "https://copybin4u.web.app/encrypt_decrypt",
-    },
-    {
       name: "Code>bin",
       key: "https://codebin4u.web.app/",
+    },
+    {
+      name: "Encrypt/Decrypt file",
+      key: "https://copybin4u.web.app/encrypt_decrypt",
     },
   ],
 });

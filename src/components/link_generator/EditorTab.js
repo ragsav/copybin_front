@@ -2,7 +2,7 @@ import { Grid } from "@agney/react-loading";
 
 // import ReCAPTCHA from "react-google-recaptcha";
 // import FileHandler from "./encrypt_decrypt";
-import Captcha from "captcha-image";
+import Captcha from "../captcha/captcha";
 import React from "react";
 import AceEditor from "react-ace";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
@@ -22,21 +22,7 @@ Constants.THEMES.forEach((theme) =>
   require(`ace-builds/src-noconflict/theme-${theme}`)
 );
 
-// hookhelper = () =>{
-// const { ipfs, ipfsInitError } = useIpfsFactory({ commands: ["id"] });
-// const id = useIpfs(ipfs, "id");
-// ["id", "agentVersion"].map((key) => console.log(id[key]));
-// }
-const captchaImage = new Captcha(
-  "35px Arial",
-  "center",
-  "middle",
-  300,
-  150,
-  "#eee",
-  "#111",
-  6
-).createImage();
+
 
 function createMarkup(source) {
   return { __html: source };
@@ -44,8 +30,8 @@ function createMarkup(source) {
 export default class EditorTab extends React.Component {
   constructor(props) {
     super(props);
-    this.canvasRef = React.createRef();
-
+    // this.canvasRef = React.createRef();
+    
     this.state = {
       // ipfs: null,
       text: "",
@@ -60,9 +46,13 @@ export default class EditorTab extends React.Component {
       textEditortheme: Constants.DEFAULTTHEME,
       public: false,
       textEditorMode: Constants.DEFAULTMODE,
-
+      captcha: "",
+      isBot: true,
       errors: [],
     };
+
+    this.canvas = React.createRef();
+    this.captchaRef = React.createRef();
 
     this.onCheckBoxClicked = this.onCheckBoxClicked.bind(this);
     this.onTitleChanged = this.onTitleChanged.bind(this);
@@ -76,67 +66,102 @@ export default class EditorTab extends React.Component {
     this.onPublicChanged = this.onPublicChanged.bind(this);
     this.setTextEditorTheme = this.setTextEditorTheme.bind(this);
     this.onEditableChanged = this.onEditableChanged.bind(this);
+    this.checkIsBot = this.checkIsBot.bind(this);
+    this.getImgValidCode = this.getImgValidCode.bind(this);
+    this.onCaptchaChanged = this.onCaptchaChanged.bind(this);
   }
-  // componentCleanup() {
-  //   if (this.state.ipfs && this.state.ipfs.stop) {
-  //     console.log("Stopping IPFS");
-  //     this.state.ipfs.stop().catch((err) => console.error(err));
-  //     this.setState({
-  //       ipfs: null,
-  //     });
-  //   }
-  // }
 
   componentWillUnmount() {
     // this.componentCleanup();
   }
+
   componentDidMount() {
-    // var word="hello"
-    // const canvas = this.canvasRef.current;
-    // const context = canvas.getContext("2d");
-    // // for(var i = 0; i < word.length; i++) {
-    // //   context.transform(
-    // //     Math.random(),
-    // //     Math.random(),
-    // //     Math.random(),
-    // //     Math.random(),
-    // //     Math.random(),
-    // //     Math.random()
-    // //   );
-    // // }
-    // context.transform(
-    //   1 - Math.random(),
-    //   Math.random(),
-    //   Math.random(),
-    //   1 + Math.random(),
-    //   Math.random(),
-    //   Math.random()
-    // );
-    // // context.setTransform(1,0, 0, 1, 0, 0);
-    // context.font = "30px Arial";
-    // context.fillText(word, 10, 50);
-    //Our first draw
-    // context.fillStyle = "#000000";
-    // context.fillRect(0, 0, context.canvas.width, context.canvas.height);
-    // window.addEventListener("beforeunload", this.componentCleanup);
+    this.getImgValidCode();
   }
+
+  getImgValidCode = () => {
+    let showNum = [];
+    let canvasWinth = 200;
+    let canvasHeight = 30;
+
+    const canvas = this.canvas.current;
+    const context = canvas.getContext("2d");
+
+    canvas.width = canvasWinth;
+    canvas.height = canvasHeight;
+
+    let sCode = this.props.specialChar
+      ? "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,0,1,2,3,4,5,6,7,8,9,!,@,#,$,%,^,&,*,(,)"
+      : "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,0,1,2,3,4,5,6,7,8,9";
+    let saCode = sCode.split(",");
+    let saCodeLen = saCode.length;
+    for (let i = 0; i <= 3; i++) {
+      let sIndex = Math.floor(Math.random() * saCodeLen);
+      let sDeg = (Math.random() * 30 * Math.PI) / 180;
+      let cTxt = saCode[sIndex];
+      showNum[i] = cTxt;
+      let x = 10 + i * 20;
+      let y = 20 + Math.random() * 8;
+      context.font = "bold 23px 微软雅黑";
+      context.translate(x, y);
+      context.rotate(sDeg);
+
+      context.fillStyle = this.randomColor();
+      context.fillText(cTxt, 0, 0);
+
+      context.rotate(-sDeg);
+      context.translate(-x, -y);
+    }
+    for (let i = 0; i <= 5; i++) {
+      context.strokeStyle = this.randomColor();
+      context.beginPath();
+      context.moveTo(Math.random() * canvasWinth, Math.random() * canvasHeight);
+      context.lineTo(Math.random() * canvasWinth, Math.random() * canvasHeight);
+      context.stroke();
+    }
+    for (let i = 0; i < 30; i++) {
+      context.strokeStyle = this.randomColor();
+      context.beginPath();
+      let x = Math.random() * canvasWinth;
+      let y = Math.random() * canvasHeight;
+      context.moveTo(x, y);
+      context.lineTo(x + 1, y + 1);
+      context.stroke();
+    }
+    // context.fillStyle = "white";
+    var rightCode = showNum.join("");
+    this.setState({
+      captcha: rightCode,
+    });
+  };
+
+  randomColor = () => {
+    let r = Math.floor(Math.random() * 256);
+    let g = Math.floor(Math.random() * 256);
+    let b = Math.floor(Math.random() * 256);
+    return "rgb(" + r + "," + g + "," + b + ")";
+  };
+
   onEditableChanged = (e) => {
     this.setState({
       editable: !this.state.editable,
     });
-    console.log(this.state.editable);
+   
   };
+
   onPublicChanged = (e) => {
     this.setState({
       public: !this.state.public,
     });
-    console.log(this.state.public);
+   
   };
+
   setTextEditorTheme = (e) => {
     this.setState({
       textEditortheme: e.target.value,
     });
   };
+
   setTextEditorMode = (e) => {
     this.setState({
       textEditorMode: e.target.value,
@@ -146,23 +171,33 @@ export default class EditorTab extends React.Component {
   onCheckBoxClicked = () => {
     this.setState({ isPassword: !this.state.isPassword });
   };
+
   onTitleChanged = (event) => {
     this.setState({ title: event.target.value });
   };
+
+  onCaptchaChanged = (event) => {
+    this.setState({ captcha: event.target.value });
+  };
+
   onTextChanged = (newText) => {
     this.setState({ text: newText });
-    console.log(this.state.text);
+    
   };
+
   onBurnChanged = (event) => {
     this.setState({ burn: event.target.value });
   };
+
   onPasswordChanged = (event) => {
-    console.log(this.state.password);
+    
     this.setState({ password: event.target.value });
   };
+
   onExpiryChanged = (event) => {
     this.setState({ expiry: parseInt(event.target.value) });
   };
+
   onLinkRecieved = (url) => {
     this.setState({
       link: url,
@@ -185,11 +220,15 @@ export default class EditorTab extends React.Component {
       errors.push("password");
     }
 
+    
+    if (this.state.captcha !== this.captchaRef.current.value) {
+    
+      errors.push("Not human");
+    }
     this.setState({
       errors: errors,
     });
 
-    console.log(errors);
     if (errors.length > 0) {
       // return false;
     } else {
@@ -215,42 +254,38 @@ export default class EditorTab extends React.Component {
         data: postObject,
       })
         .then(function (response) {
-          console.log(response.data);
+          
           self.setState({
             link: response.data.url,
             submitted: false,
           });
         })
         .catch(function (error) {
-          console.log(error);
+          
         });
 
-      console.log("text submitted");
-      console.log(postObject);
+     
     }
   };
 
   hasError(key) {
     return this.state.errors.indexOf(key) !== -1;
   }
+
+  checkIsBot = (isBot) => {
+    this.setState({ isBot: isBot });
+  };
+
   render() {
     return (
       <div style={{}}>
         <Col
           style={{
-            // maxWidth:"100%",
-            // left:"50px",
-            // right:"50px",
-            // padding: "30px",
             margin: "auto",
-
-            // marginLeft:"5%",
-            // marginRight:"5%",
             backgroundColor: "white",
             borderRadius: 0,
             width: "1024px",
             padding: 4,
-            // margin: 0,
           }}
         >
           <Row
@@ -398,7 +433,7 @@ export default class EditorTab extends React.Component {
                             </Form.Control>
                           </Col>
                         </Row>
-                        <Row style={{ padding: 4, width: "100%", margin: 0 }}>
+                        {/* <Row style={{ padding: 4, width: "100%", margin: 0 }}>
                           <Col style={{ padding: 0 }}>
                             <Form.Control
                               type="number"
@@ -410,7 +445,7 @@ export default class EditorTab extends React.Component {
                               }}
                             />
                           </Col>
-                        </Row>
+                        </Row> */}
                         <Row style={{ padding: 4, width: "100%", margin: 0 }}>
                           <Col style={{ padding: 0 }}>
                             <Form.Check
@@ -473,7 +508,58 @@ export default class EditorTab extends React.Component {
                             )}
                           </Col>
                         </Row>
-
+                        <Row style={{ padding: 4, width: "100%", margin: 0 }}>
+                          <Col style={{ padding: 0 }}>
+                            <canvas
+                              id="valicode"
+                              ref={this.canvas}
+                              style={{
+                                width: "100%",
+                                backgroundColor: "white",
+                                border: `1px solid ${Constants.SECONDARY}`,
+                                borderRadius: 4,
+                              }}
+                            ></canvas>
+                          </Col>
+                        </Row>
+                        <Row style={{ padding: 4, width: "100%", margin: 0 }}>
+                          <Col style={{ padding: 0 }}>
+                            <Form.Control
+                              type="text"
+                              placeholder="Enter captcha"
+                              ref={this.captchaRef}
+                              style={{
+                                fontSize: "small",
+                                color: Constants.MONOKAI,
+                                backgroundColor: this.hasError("Not human")
+                                  ? "rgb(255, 236, 235)"
+                                  : "white",
+                                border: this.hasError("Not human")
+                                  ? "1px solid red"
+                                  : `1px solid ${Constants.SECONDARY}`,
+                              }}
+                            />
+                          </Col>
+                        </Row>
+                        <Row style={{ padding: 4, width: "100%", margin: 0 }}>
+                          <Col style={{ padding: 0 }}>
+                            <Form.Control
+                              as="select"
+                              style={{
+                                fontSize: "small",
+                                border: `1px solid ${Constants.SECONDARY}`,
+                                color: Constants.MONOKAI,
+                              }}
+                              onChange={this.setTextEditorMode}
+                            >
+                              {Constants.MODES.map((lang) => (
+                                <option key={lang} value={lang}>
+                                  {lang}
+                                </option>
+                              ))}
+                            </Form.Control>
+                          </Col>
+                        </Row>
                         <Row style={{ padding: 4, width: "100%", margin: 0 }}>
                           <Col style={{ padding: 0 }}>
                             <Button
@@ -528,32 +614,14 @@ export default class EditorTab extends React.Component {
                                   backgroundColor: Constants.PRIMARY,
                                 }}
                                 as="textarea"
-                                rows={4}
+                                rows={2}
                                 size="sm"
                                 readOnly
                               />
                             </Form.Group>
                           </Col>
                         </Row>
-                        <Row style={{ padding: 4, width: "100%", margin: 0 }}>
-                          <Col style={{ padding: 0 }}>
-                            <Form.Control
-                              as="select"
-                              style={{
-                                fontSize: "small",
-                                border: `1px solid ${Constants.SECONDARY}`,
-                                color: Constants.MONOKAI,
-                              }}
-                              onChange={this.setTextEditorMode}
-                            >
-                              {Constants.MODES.map((lang) => (
-                                <option key={lang} value={lang}>
-                                  {lang}
-                                </option>
-                              ))}
-                            </Form.Control>
-                          </Col>
-                        </Row>
+
                         {/* <Row style={{ padding: 4, width: "100%", margin: 0 }}>
                           <Col style={{ padding: 0 }}>
                             <Form.Control

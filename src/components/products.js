@@ -57,6 +57,7 @@ export default function Products(props) {
             >
               {Constants.PRODUCTS.map((co) => (
                 <Col
+                  key={co.key}
                   style={{
                     padding: 0,
                     paddingTop: 4,
