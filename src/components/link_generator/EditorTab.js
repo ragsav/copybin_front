@@ -1,15 +1,12 @@
 import { Grid } from "@agney/react-loading";
-
-// import ReCAPTCHA from "react-google-recaptcha";
-// import FileHandler from "./encrypt_decrypt";
-import Captcha from "../captcha/captcha";
 import React from "react";
 import AceEditor from "react-ace";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import { toast} from "react-toastify";
 import Constants from "../../constants/constants";
 import Footer from "../footer";
-import Products from "../products";
 import PostTab from "./PostTab";
+
 
 const axios = require("axios");
 
@@ -27,11 +24,12 @@ Constants.THEMES.forEach((theme) =>
 function createMarkup(source) {
   return { __html: source };
 }
+
 export default class EditorTab extends React.Component {
   constructor(props) {
     super(props);
     // this.canvasRef = React.createRef();
-    
+
     this.state = {
       // ipfs: null,
       text: "",
@@ -51,6 +49,7 @@ export default class EditorTab extends React.Component {
       errors: [],
     };
 
+    
     this.canvas = React.createRef();
     this.captchaRef = React.createRef();
 
@@ -69,8 +68,10 @@ export default class EditorTab extends React.Component {
     this.checkIsBot = this.checkIsBot.bind(this);
     this.getImgValidCode = this.getImgValidCode.bind(this);
     this.onCaptchaChanged = this.onCaptchaChanged.bind(this);
+    
   }
 
+  
   componentWillUnmount() {
     // this.componentCleanup();
   }
@@ -146,14 +147,12 @@ export default class EditorTab extends React.Component {
     this.setState({
       editable: !this.state.editable,
     });
-   
   };
 
   onPublicChanged = (e) => {
     this.setState({
       public: !this.state.public,
     });
-   
   };
 
   setTextEditorTheme = (e) => {
@@ -174,15 +173,29 @@ export default class EditorTab extends React.Component {
 
   onTitleChanged = (event) => {
     this.setState({ title: event.target.value });
+    if(this.hasError("title")){
+      var errors = this.state.errors;
+      errors.splice(errors.indexOf("title"),1);
+      this.setState({errors:errors});
+    }
   };
 
   onCaptchaChanged = (event) => {
     this.setState({ captcha: event.target.value });
+    if (this.hasError("captcha")) {
+      var errors = this.state.errors;
+      errors.splice(errors.indexOf("captcha"), 1);
+      this.setState({ errors: errors });
+    }
   };
 
   onTextChanged = (newText) => {
     this.setState({ text: newText });
-    
+    if (this.hasError("text")) {
+      var errors = this.state.errors;
+      errors.splice(errors.indexOf("text"), 1);
+      this.setState({ errors: errors });
+    }
   };
 
   onBurnChanged = (event) => {
@@ -190,7 +203,6 @@ export default class EditorTab extends React.Component {
   };
 
   onPasswordChanged = (event) => {
-    
     this.setState({ password: event.target.value });
   };
 
@@ -211,7 +223,6 @@ export default class EditorTab extends React.Component {
     var errors = [];
     if (this.state.text === "") {
       errors.push("text");
-      alert("Enter some text");
     }
     if (this.state.title === "") {
       errors.push("title");
@@ -219,17 +230,36 @@ export default class EditorTab extends React.Component {
     if (this.state.isPassword && this.state.password === "") {
       errors.push("password");
     }
-
-    
     if (this.state.captcha !== this.captchaRef.current.value) {
-    
-      errors.push("Not human");
+      errors.push("captcha");
+      toast.warn(`Captcha isn't matching ,please try again`, {
+        position: "bottom-right", 
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
     }
     this.setState({
       errors: errors,
     });
 
     if (errors.length > 0) {
+      this.getImgValidCode()
+      toast.error(`It seems that there are ${errors.length} errors `, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+   
+      
       // return false;
     } else {
       this.setState({
@@ -254,17 +284,12 @@ export default class EditorTab extends React.Component {
         data: postObject,
       })
         .then(function (response) {
-          
           self.setState({
             link: response.data.url,
             submitted: false,
           });
         })
-        .catch(function (error) {
-          
-        });
-
-     
+        .catch(function (error) {});
     }
   };
 
@@ -351,7 +376,9 @@ export default class EditorTab extends React.Component {
                           height: "450px",
                           width: "100%",
                           borderRadius: 4,
-                          border: `1px solid ${Constants.MONOKAI}`,
+                          border: this.hasError("text")
+                            ? "2px solid red"
+                            : `1px solid ${Constants.SECONDARY}`,
                         }}
                         placeholder="Your text here"
                         mode={this.state.textEditorMode}
@@ -407,7 +434,7 @@ export default class EditorTab extends React.Component {
                                   ? "rgb(255, 236, 235)"
                                   : "white",
                                 border: this.hasError("title")
-                                  ? "1px solid red"
+                                  ? "2px solid red"
                                   : `1px solid ${Constants.SECONDARY}`,
                               }}
                               onChange={this.onTitleChanged}
@@ -489,11 +516,11 @@ export default class EditorTab extends React.Component {
                                   fontSize: "small",
                                   float: "right",
                                   color: Constants.MONOKAI,
-                                  backgroundColor: this.hasError("title")
+                                  backgroundColor: this.hasError("password")
                                     ? "rgb(255, 236, 235)"
                                     : "white",
-                                  border: this.hasError("title")
-                                    ? "1px solid red"
+                                  border: this.hasError("password")
+                                    ? "2px solid red"
                                     : `2px solid ${Constants.SECONDARY}`,
                                 }}
                               />
@@ -531,11 +558,11 @@ export default class EditorTab extends React.Component {
                               style={{
                                 fontSize: "small",
                                 color: Constants.MONOKAI,
-                                backgroundColor: this.hasError("Not human")
+                                backgroundColor: this.hasError("captcha")
                                   ? "rgb(255, 236, 235)"
                                   : "white",
-                                border: this.hasError("Not human")
-                                  ? "1px solid red"
+                                border: this.hasError("captcha")
+                                  ? "2px solid red"
                                   : `1px solid ${Constants.SECONDARY}`,
                               }}
                             />
@@ -614,33 +641,13 @@ export default class EditorTab extends React.Component {
                                   backgroundColor: Constants.PRIMARY,
                                 }}
                                 as="textarea"
-                                rows={2}
+                                rows={3}
                                 size="sm"
                                 readOnly
                               />
                             </Form.Group>
                           </Col>
                         </Row>
-
-                        {/* <Row style={{ padding: 4, width: "100%", margin: 0 }}>
-                          <Col style={{ padding: 0 }}>
-                            <Form.Control
-                              as="select"
-                              style={{
-                                fontSize: "small",
-                                border: `1px solid ${Constants.SECONDARY}`,
-                                color: Constants.MONOKAI,
-                              }}
-                              onChange={this.setTextEditorTheme}
-                            >
-                              {Constants.THEMES.map((lang) => (
-                                <option key={lang} value={lang}>
-                                  {lang}
-                                </option>
-                              ))}
-                            </Form.Control>
-                          </Col>
-                        </Row> */}
 
                         <Row style={{ padding: 4, width: "100%", margin: 0 }}>
                           <Col style={{ padding: 0 }}>

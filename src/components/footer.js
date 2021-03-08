@@ -15,62 +15,145 @@ export default function Footer(props) {
           width: "100%",
           borderRadius: 4,
           height: "200px",
-          backgroundColor: "white",
+          color: "white",
+          padding: 10,
+          marginTop: 80,
+          backgroundColor: Constants.SECONDARY,
         }}
       >
-        <Row style={{ padding: 0, margin: 0 }}></Row>
-        {/* <Row
-          gutter={40}
-          style={{
-            padding: 4,
-            margin: 0,
-            marginTop: 5,
-          }}
-        >
-          {Constants.PRODUCTS.map((co) => (
-            <Col
-              key={co.key}
-              style={{
-                padding: 0,
-                paddingTop: 4,
-                paddingBottom: 4,
-                margin: 0,
-              }}
-              xs={{ span: 6 }}
-              sm={{ span: 4 }}
-              md={{ span: 4 }}
-              lg={{ span: 3 }}
-              xl={{ span: 2 }}
-            >
-              <Card
-                style={{
-                  height: "100%",
-                  padding: 4,
-                  border: "none",
-                  margin: 4,
+        <Row style={{ padding: 4, margin: 0 }}>
+          <Col
+            className="textStyleCode d-none d-lg-block"
+            style={{
+              padding: 4,
+              paddingLeft: 10,
+              paddingRight: 10,
+              margin: 0,
+              fontSize: 20,
+            }}
+          >
+            {Constants.WEBSITE}
+          </Col>
 
-                  backgroundColor: "#00000000",
+          <Col
+            className="d-none d-sm-block"
+            style={{ padding: 0, paddingLeft: 10, paddingRight: 10, margin: 0 }}
+          >
+            <Row style={{ padding: 4, margin: 0 }}>
+              <Col
+                className="textStyleLatoThin"
+                style={{
+                  textAlign: "left",
+                  fontSize: 14,
+                  fontWeight: 400,
                 }}
               >
-                <a
-                  href={co.key}
-                  // target="_blank"
-                  // className="textStyleCode"
-                  style={{
-                    textDecoration: "none",
-                    color: "white",
-                    fontSize: "12px",
-                    fontWeight: "400",
-                    textAlign: "start",
-                  }}
-                >
-                  {" "}
-                  {co.name}
-                </a>
-              </Card>
-            </Col>
-          ))}
-        </Row> */}
+                Description
+              </Col>
+            </Row>
+            <Row style={{ padding: 4, margin: 0 }}>
+              <Col
+                className="textStyleLatoThin"
+                style={{
+                  fontSize: 12,
+                  textAlign: "left",
+                  fontWeight: 100,
+                }}
+              >
+                Copy>bin is a link generation website
+              </Col>
+            </Row>
+          </Col>
+
+          <Col
+            style={{ padding: 0, paddingLeft: 10, paddingRight: 10, margin: 0 }}
+          >
+            <Row style={{ padding: 4, margin: 0 }}>
+              <Col
+                className="textStyleLatoThin"
+                style={{
+                  textAlign: "left",
+                  fontSize: 14,
+                  fontWeight: 400,
+                }}
+              >
+                More Utilities
+              </Col>
+            </Row>
+            <Row style={{ padding: 4, margin: 0 }}>
+              <ul
+                style={{
+                //   textDecoration: "none",
+                  textAlign: "left",
+                //   color: "white",
+                  fontSize: 12,
+                  fontWeight: 100,
+                }}
+              >
+                {Constants.PRODUCTS.map((co) => (
+                  <li key={co.key}>
+                    <a
+                      href={co.key}
+                      // target="_blank"
+                      // className="textStyleCode"
+                      style={{
+                        textDecoration: "none",
+                        
+                        color: "white",
+                        
+                      }}
+                    >
+                      {" "}
+                      {co.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </Row>
+          </Col>
+
+          <Col
+            style={{ padding: 0, paddingLeft: 10, paddingRight: 10, margin: 0 }}
+          >
+            <Row style={{ padding: 4, margin: 0 }}>
+              <Col
+                className="textStyleLatoThin"
+                style={{
+                  textAlign: "left",
+                  fontSize: 14,
+                  fontWeight: 400,
+                }}
+              >
+                Technology
+              </Col>
+            </Row>
+            <Row style={{ padding: 4, margin: 0 }}>
+              <ul
+                style={{
+                  fontSize: 12,
+                  fontWeight: 100,
+                  textAlign: "left",
+                }}
+              >
+                <li>
+                  <a>React js</a>
+                </li>
+                <li>
+                  <a>MongoDB</a>
+                </li>
+                <li>
+                  <a>NodeJS</a>
+                </li>
+                <li>
+                  <a>Heroku</a>
+                </li>
+                <li>
+                  <a>Firebase</a>
+                </li>
+              </ul>
+            </Row>
+          </Col>
+        </Row>
       </div>
     );
 }

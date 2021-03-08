@@ -5,7 +5,7 @@ import AceEditor from "react-ace";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import Constants from "../../constants/constants";
 import Footer from "../footer";
-
+import { toast } from "react-toastify";
 const axios = require("axios");
 
 Constants.MODES.forEach((lang) => {
@@ -71,6 +71,15 @@ export default class CodeViewer extends React.Component {
         if (response.data.message === "please enter password") {
           self.setState({
             isPassword: true,
+          });
+          toast.warn(`The text requires password to view`, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
           });
         } else {
           
@@ -337,13 +346,14 @@ export default class CodeViewer extends React.Component {
                     >
                       <Form style={{ width: "100%" }}>
                         <Card style={{ padding: 0, margin: 4 }}>
-                          <Row style={{ padding: 0 }}>
-                            <Col style={{ padding: 2 }}>
+                          <Row style={{ padding: 0 ,margin:0}}>
+                            <Col style={{ padding: 0 ,margin:0}}>
                               <Button
                                 variant="link"
                                 style={{
                                   fontSize: 12,
-                                  padding: 0,
+                                  
+                                  
                                   textDecoration: "none",
                                 }}
                                 onClick={this.textFile}
@@ -351,12 +361,13 @@ export default class CodeViewer extends React.Component {
                                 Download
                               </Button>
                             </Col>
-                            <Col style={{ padding: 4 }}>
+                            <Col style={{ padding: 0,margin:0 }}>
                               <Button
                                 variant="link"
                                 style={{
                                   fontSize: 12,
-                                  padding: 0,
+                                  
+                                  
                                   textDecoration: "none",
                                 }}
                                 onClick={this.textFile}

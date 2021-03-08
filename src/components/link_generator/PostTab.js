@@ -69,7 +69,7 @@ function PostsList(props) {
         <Col
           className="d-none d-sm-block"
           sm={{ span: 6 }}
-          md={{ span: 4 }}
+          md={{ span: 6 }}
           lg={{ span: 6 }}
           xl={{ span: 6 }}
           style={{
@@ -82,8 +82,8 @@ function PostsList(props) {
           {toDate(post.updatedAt)}
         </Col>
         <Col
-          className="d-none d-md-block"
-          md={{ span: 2 }}
+          className="d-none d-lg-block"
+          
           lg={{ span: 2 }}
           xl={{ span: 2 }}
           style={{
@@ -188,7 +188,7 @@ export default class PostTab extends React.Component {
         style={{
           padding: 0,
           paddingTop: 50,
-          paddingBottom: 50,
+          
           margin: 0,
         }}
       >
@@ -243,7 +243,7 @@ export default class PostTab extends React.Component {
             <Col
               className="d-none d-sm-block"
               sm={{ span: 6 }}
-              md={{ span: 4 }}
+              md={{ span: 6 }}
               lg={{ span: 6 }}
               xl={{ span: 6 }}
               style={{
@@ -256,8 +256,8 @@ export default class PostTab extends React.Component {
               Last updated
             </Col>
             <Col
-              className="d-none d-md-block"
-              md={{ span: 2 }}
+              className="d-none d-lg-block"
+              
               lg={{ span: 2 }}
               xl={{ span: 2 }}
               style={{

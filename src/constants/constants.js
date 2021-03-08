@@ -1,6 +1,6 @@
 module.exports = Object.freeze({
-  // HOST: "http://localhost:3000/",
-  HOST: "https://copybin4u.web.app/",
+  HOST: "http://localhost:3000/",
+  // HOST: "https://copybin4u.web.app/",
   SERVERHOST: "https://copybinback.herokuapp.com",
 
   WEBSITE: "Copy>Bin",
