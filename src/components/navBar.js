@@ -61,7 +61,7 @@ const MainNavBar = () => (
                   marginRight: 20,
                 }}
               >
-                Home
+                About
               </Nav.Link>
             </Nav>
           </Col>
