@@ -7,6 +7,8 @@ Copy>bin is a link generation website
 https://copybin4u.web.app
 
 
+![Screenshot](Capture.PNG)
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
