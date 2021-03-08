@@ -374,6 +374,9 @@ export default class EditorTab extends React.Component {
                       <AceEditor
                         style={{
                           height: "450px",
+                          backgroundColor: this.hasError("text")
+                            ? "rgb(255, 236, 235)"
+                            : "white",
                           width: "100%",
                           borderRadius: 4,
                           border: this.hasError("text")
