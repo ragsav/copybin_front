@@ -17,6 +17,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ## For Setup
 1. Install NodeJs
 2. Clone the repository
-3. cd Repository
-4. NPM install
-5. NPM start to start the website on the local server
+3. cd repository
+4. Run 'npm install'
+5. Change the host to localhost in constants to run on local server
+5. Run 'npm start' to start the website on the local server

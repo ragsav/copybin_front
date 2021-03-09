@@ -1,13 +1,14 @@
 import {
-    Alert,
-    Form,
-    Button,
-    Card,
-    Row,
-    Col,
-    Container,
+  Alert,
+  Form,
+  Button,
+  Card,
+  Row,
+  Col,
+  Image,
+  Container,
 } from "react-bootstrap";
-
+import logo from "./logo_size.jpg";
 import Constants from "../constants/constants";
 var { SocialIcon } = require("react-social-icons");
 export default function Footer(props) {
@@ -30,11 +31,11 @@ export default function Footer(props) {
               padding: 4,
               paddingLeft: 10,
               paddingRight: 10,
-              margin: 0,
+              
               fontSize: 20,
             }}
           >
-            {Constants.WEBSITE}
+            <Image src={logo} rounded style={{  height:  100,  width:  100}}  />
           </Col>
 
           <Col
@@ -65,7 +66,7 @@ export default function Footer(props) {
                 Copy>bin is a link generation website
               </Col>
             </Row>
-            <Row style={{ padding: 4, margin: 0,  paddingLeft:  15 }}>
+            <Row style={{ padding: 4, margin: 0, paddingLeft: 15 }}>
               <div
                 style={{
                   padding: 4,
