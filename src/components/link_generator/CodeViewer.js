@@ -248,7 +248,7 @@ export default class CodeViewer extends React.Component {
             // marginRight:"5%",
             backgroundColor: "white",
             borderRadius: 0,
-            width: "1024px",
+            width: "940px",
             padding: 4,
             // margin: 0,
           }}

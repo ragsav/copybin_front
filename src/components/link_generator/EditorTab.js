@@ -309,7 +309,7 @@ export default class EditorTab extends React.Component {
             margin: "auto",
             backgroundColor: "white",
             borderRadius: 0,
-            width: "1024px",
+            width: "940px",
             padding: 4,
           }}
         >

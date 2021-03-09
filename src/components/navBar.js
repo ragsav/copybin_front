@@ -20,7 +20,7 @@ const MainNavBar = () => (
         // backgroundColor: "white",
         borderRadius: 2,
         padding: 12,
-        width: "1024px",
+        width: "940px",
       }}
     >
       <Navbar
